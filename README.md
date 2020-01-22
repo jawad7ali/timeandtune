@@ -16,6 +16,34 @@
   </a>
 </p>
 
+## Login
+###link http://127.0.0.1:3000/api/auth/mobile/login   type post
+{
+ 
+	"password"				:	"pass12345336",
+	"phone_no"				:	"033256722333233"
+}
+
+## Sign Up
+###link http://127.0.0.1:3000/api/signup   type post
+{
+	"name"					:  "gulshan khan",
+	"role_id"				:	2, 
+	"password"				:	"pass12345336",
+	"confirmPassword"		:	"pass12345336",
+	"company_name"			:	"Tested",
+	"role"					:	"carrier",
+	"phone_no"				:	"033256722333233"
+}
+
+## Sign Up
+###link http://127.0.0.1:3000/api/mobile/load   type post
+ 
+
+
+
+
+
 # Laravue
 [Laravue](https://laravue.dev) (pronounced /ˈlarəvjuː/) is a beautiful dashboard combination of [Laravel](https://laravel.com/), [Vue.js](https://github.com/vuejs/vue) and the UI Toolkit [Element](https://github.com/ElemeFE/element). The work is inspired by  [vue-element-admin](http://panjiachen.github.io/vue-element-admin) with our love on top of that. With the powerful Laravel framework as the backend, Vue.js as the high performance on the frontend,  Laravue appears to be a full-stack solution for an enterprise application level.
 

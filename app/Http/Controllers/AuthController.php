@@ -27,7 +27,9 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+        
         $credentials = $request->only('email', 'password');
+        
         if ($token = $this->guard()->attempt($credentials)) {
             return response()->json(new UserResource(Auth::user()), Response::HTTP_OK)->header('Authorization', $token);
         }
@@ -60,7 +62,8 @@ class AuthController extends Controller
      */
     public function mobile_login(Request $request)
     {
-        $credentials = $request->only('mobile_no');
+        $credentials = $request->only('phone_no', 'password');
+        
         if ($token = $this->guard()->attempt($credentials)) {
             return response()->json(new UserResource(Auth::user()), Response::HTTP_OK)->header('Authorization', $token);
         } 

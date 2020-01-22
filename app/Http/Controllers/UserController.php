@@ -295,9 +295,10 @@ class UserController extends Controller
             $role = Role::findByName($params['role']);
             
             $user->syncRoles($role);
-           
+
             $user = array(
-                    'phone'=>$params['phone_no']
+                    'phone'=>$params['phone_no'],
+                    'id'=>$user->id
 
                     );
             return response()->json(['success' => 'User sign up successfully !', 'data'=>$user], 200);

@@ -33,12 +33,10 @@ class LoadsController extends Controller
      */
     public function index()
     {
-         $Loads = Loads::all();
+        $Loads = Loads::all();
          
-          return response()->json(new JsonResponse(['items' => $Loads]));
+        return response()->json(new JsonResponse(['items' => $Loads]));
        
-
-        
        
          //return json_encode($loads);
             

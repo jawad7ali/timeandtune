@@ -33,32 +33,35 @@ use Illuminate\Support\Facades\Hash;
 //     return $request->user();
 // });
 
-Route::group(['middleware' => 'api'], function () {
+    Route::group(['middleware' => 'api'], function () {
     
     Route::post('mobile/load', 'LoadsController@index');
-
-     
-
-    //mobile API'S
    
-
+    //mobile API'S
+    
     Route::post('auth/mobile/login', 'AuthController@mobile_login');
     
     //mobile Sign Up API'S
-    Route::post('signup', 'UserController@signUp');
+    Route::post('signup', 'UserController@signUp');   
     
-
     Route::post('auth/login', 'AuthController@login');
+    
     Route::group(['middleware' => 'auth:api'], function () {
         Route::get('auth/user', 'AuthController@user');
         Route::post('auth/logout', 'AuthController@logout');
     });
+    
 
     Route::apiResource('users', 'UserController')->middleware('permission:' . \App\Laravue\Acl::PERMISSION_USER_MANAGE);
+    
     Route::get('users/{user}/permissions', 'UserController@permissions')->middleware('permission:' . \App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    
     Route::put('users/{user}/permissions', 'UserController@updatePermissions')->middleware('permission:' . \App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    
     Route::apiResource('roles', 'RoleController')->middleware('permission:' . \App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    
     Route::get('roles/{role}/permissions', 'RoleController@permissions')->middleware('permission:' . \App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    
     Route::apiResource('permissions', 'PermissionController')->middleware('permission:' . \App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
 
     // Fake APIs
