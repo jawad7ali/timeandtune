@@ -20,7 +20,6 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Validator;
-
 /**
  * Class UserController
  *
@@ -40,10 +39,13 @@ class UserController extends Controller
     {
         $searchParams = $request->all();
         $userQuery = User::query();
+        
         $limit = Arr::get($searchParams, 'limit', static::ITEM_PER_PAGE);
+        
         $role = Arr::get($searchParams, 'role', '');
+        
         $keyword = Arr::get($searchParams, 'keyword', '');
-
+        
         if (!empty($role)) {
             $userQuery->whereHas('roles', function($q) use ($role) { $q->where('name', $role); });
         }
@@ -64,6 +66,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        
         $validator = Validator::make(
             $request->all(),
             array_merge(
@@ -77,16 +80,19 @@ class UserController extends Controller
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 403);
-        } else {
+        } 
+        else {
             $params = $request->all();
             $user = User::create([
                 'name' => $params['name'],
                 'email' => $params['email'],
                 'password' => Hash::make($params['password']),
             ]);
-            $role = Role::findByName($params['role']);
-            $user->syncRoles($role);
 
+            $role = Role::findByName($params['role']);
+            
+            $user->syncRoles($role);
+            
             return new UserResource($user);
         }
     }
@@ -214,11 +220,112 @@ class UserController extends Controller
     {
         return [
             'name' => 'required',
+            'phone_no' => 'required',
             'email' => $isNew ? 'required|email|unique:users' : 'required|email',
             'roles' => [
                 'required',
                 'array'
             ],
         ];
+    }
+
+    private function getValidationR($isNew = true)
+    {
+        return [
+            'truct_number' => 'sometimes|required',
+            'company_name' => 'sometimes|required',
+            'role_id' => 'required',    
+            'password' => ['required', 'min:6'],
+            'confirmPassword' => 'required_with:password|same:password|min:6',
+        ];
+    }
+
+
+
+    /**
+     * Mobile Update.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function signUp(Request $request)
+    {
+
+        if(isset($request['name']) and $request['name']!=''){
+            $request['name'] = $request['name'];
+        }else{
+            $request['name'] = "islam gulshan";
+        }   
+        $request['email'] = "islam".@$request['phone_no']."@gmail.com";
+        
+        $request['roles'] = ['2'];        
+        
+        $validator = Validator::make(
+            $request->all(),    
+            array_merge(
+                $this->getValidationRules(),
+                [
+                    'password' => ['required', 'min:6'],
+                    'confirmPassword' => 'same:password',
+                ]
+            )
+        );
+
+        
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 403);
+        }
+
+        else {
+            
+            $params = $request->all();
+            
+            $user = User::create([
+                
+                'name' =>$request['name'],
+                'email' =>'islam'.$params['phone_no'].'@gmail.com',
+                'company_name' => @$params['company_name'],
+                'role_id'     => $params['role_id'], 
+                'phone_no'     => $params['phone_no'], 
+                'truct_number' => @$params['truct_number'],
+                'password' => Hash::make($params['password']),
+                
+            ]);
+
+            $role = Role::findByName($params['role']);
+            
+            $user->syncRoles($role);
+           
+            $user = array(
+                    'phone'=>$params['phone_no']
+
+                    );
+            return response()->json(['success' => 'User sign up successfully !', 'data'=>$user], 200);
+
+
+           // return new UserResource($user);
+        }
+       
+       
+        
+
+            // $params = $request->all();
+            // $phone_no= date("Y-m-d H:i:s", strtotime("now"));
+            // $user = User::create([
+            //     'name' =>'islam',
+            //     'email' =>'islam'.$phone_no.'@gmail.com',
+            //     'company_name' => @$params['company_name'],
+            //     'phone_no'     => $phone_no, 
+            //     'truct_number' => @$params['truct_number'],
+            //     'password' => Hash::make($params['password']),
+            // ]);
+
+         
+            
+            // $user->syncRoles($role);
+           
+           
+
+           
     }
 }

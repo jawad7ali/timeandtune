@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','truct_number','company_name','	role_id','phone_no'
     ];
 
     /**
@@ -36,4 +36,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    //user have one to one relation ship
+     public function role_id(){
+            return $this->hasOne('App\Role_types');
+    }
+
 }

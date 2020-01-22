@@ -93,19 +93,20 @@ export const constantRoutes = [
       },
     ],
   },
-  // {
-  //   path: '/documentation',
-  //   component: Layout,
-  //   redirect: '/documentation/index',
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/documentation/index'),
-  //       name: 'Documentation',
-  //       meta: { title: 'documentation', icon: 'documentation', noCache: true },
-  //     },
-  //   ],
-  // },
+  {
+    path: '/carriers',
+    component: Layout,
+    redirect: 'carriers',
+    children: [
+      {
+        path: 'index',
+		component: () => import('@/views/carrier_list/List'),
+        name: 'UserList',
+        meta: { title: 'Carrier', icon: 'user', noCache: true },
+      },
+    ],
+  }
+  ,
   // {
   //   path: '/guide',
   //   component: Layout,
