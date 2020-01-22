@@ -36,6 +36,8 @@ use Illuminate\Support\Facades\Hash;
     Route::group(['middleware' => 'api'], function () {
     
     Route::post('mobile/load', 'LoadsController@index');
+
+     Route::post('assign/order', 'LoadsController@assign_order');
    
     //mobile API'S
     
@@ -50,7 +52,7 @@ use Illuminate\Support\Facades\Hash;
         Route::get('auth/user', 'AuthController@user');
         Route::post('auth/logout', 'AuthController@logout');
     });
-    
+
 
     Route::apiResource('users', 'UserController')->middleware('permission:' . \App\Laravue\Acl::PERMISSION_USER_MANAGE);
     

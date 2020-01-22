@@ -38,6 +38,20 @@
 
 ## LOAD 
 ###link http://127.0.0.1:3000/api/mobile/load   type post
+
+
+## Assign Order 
+###link http://127.0.0.1:3000/api/assign/order   type post
+{
+	
+	"load_id" : "1",
+	"user_id" : "1" ,
+	"shipper_offer" : "22",
+	"mybidoffer":"32",
+	"commission":"323",
+	"total" : "32323232"
+}
+
  
 
 

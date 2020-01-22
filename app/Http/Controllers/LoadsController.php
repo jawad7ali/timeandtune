@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Loads;
+use App\OrdersLoad;
 use Illuminate\Http\Request;
 
 use App\Http\Resources\PermissionResource;
@@ -42,6 +43,24 @@ class LoadsController extends Controller
             
         //return view('home');
     }
+
+      public function assign_order(request $request)
+    {
+         
+        $input = $request->all();
+        OrdersLoad::create($input);
+        
+        return "success";
+        // print_r($request->file('file'));
+        // exit;
+        //  $post = new Post;
+        //  $post->title = $request->title; 
+        //  $post->body = $request->title;
+        //  $post->save();
+        //  return redirect('/post');
+        //
+    }
+
 
     
 }
