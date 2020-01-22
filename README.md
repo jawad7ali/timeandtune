@@ -36,7 +36,7 @@
 	"phone_no"				:	"033256722333233"
 }
 
-## Sign Up
+## LOAD 
 ###link http://127.0.0.1:3000/api/mobile/load   type post
  
 
