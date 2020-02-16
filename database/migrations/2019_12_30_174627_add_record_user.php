@@ -17,7 +17,11 @@ class AddRecordUser extends Migration
        $table->integer('role_id')->nullable();
             $table->string('truct_number')->nullable(); 
             $table->string('company_name')->nullable(); 
-             $table->string('phone_no')->nullable(); 
+            $table->string('phone_no')->nullable(); 
+            $table->integer('status')->nullable(); 
+            $table->string('latitude')->nullable(); 
+            $table->string('longitude')->nullable(); 
+            $table->integer('online')->nullable(); 
             //
         });
     }

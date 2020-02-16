@@ -20,6 +20,8 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Validator;
+use DB;
+use App\DriverInfo;
 /**
  * Class UserController
  *
@@ -273,7 +275,7 @@ class UserController extends Controller
 
         
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 403);
+            return response()->json(['errors' => $validator->errors()], 200);
         }
 
         else {
@@ -298,9 +300,8 @@ class UserController extends Controller
 
             $user = array(
                     'phone'=>$params['phone_no'],
-                    'id'=>$user->id
-
-                    );
+                    'id'=>$user->id,
+                    'loginstatus'=>0);
             return response()->json(['success' => 'User sign up successfully !', 'data'=>$user], 200);
 
 
@@ -329,4 +330,281 @@ class UserController extends Controller
 
            
     }
+
+
+    /*
+    /  Forgot Password 
+    */
+
+    public function reset_password(request $request)
+    {
+        
+        
+
+
+        $matchThese = array('phone_no' =>$request->get('phone_no'));
+
+        $found = User::where($matchThese)->first();
+         
+       if ($found) {  
+            if($found->status==1){
+                return response()->json(['success' => 'Number exists !','data'=>$found], 200);
+            }else{
+                return response()->json(['success' => 'Not active!'], 200);
+
+            }
+            
+            // user doesn't exist
+        }else{
+
+            return response()->json(['error' => 'Number not exists'], 200);
+             
+           
+        }
+    
+    }
+
+
+    /*
+    /  Profile Password 
+    */
+
+    public function profile(request $request)
+    {
+        
+        
+
+       $user= $request->get('user_id');
+
+        $matchThese = array('id' =>$request->get('user_id'));
+
+        $found = User::where($matchThese)->first();
+         
+       if ($found) {  
+             
+                $subjectResults = DB::select(DB::raw("select users.*,driver_infos.* from  users  
+    Left JOIN driver_infos   ON driver_infos.user_id = users.id
+    where  users.id =$user"));
+                   
+                return response()->json(['success' => 'Not active!','data'=>$subjectResults], 200);
+ 
+            // user doesn't exist
+        }else{
+
+            return response()->json(['error' => 'user Not Exist '], 200);
+             
+           
+        }
+    
+    }
+
+
+    /*
+    /  Profile Update 
+    */
+
+    public function profile_update(request $request)
+    {
+        
+        
+
+       $user= $request->get('user_id');
+       $matchThese = array('id' =>$request->get('user_id'));
+
+       $found = User::where($matchThese)->first();
+         
+       if ($found) {  
+            
+            User::where('id', $request->get('user_id'))
+            ->update([
+                   'name' => $request->get('name')
+            ]);
+
+            $matchThese = array('user_id' =>$request->get('user_id'));
+
+            $found = DriverInfo::where($matchThese)->first();
+
+
+            $input = $request->all();
+            
+            if($file = $request->file('photo')){
+                $name = time().$file->getClientOriginalName();
+                $file->move('images',$name);
+                $input['photo'] = $name; 
+            }
+            if($file = $request->file('Truck_registration')){
+                $name = time().$file->getClientOriginalName();
+                $file->move('images',$name);
+                $input['Truck_registration'] = $name; 
+            }
+            if($file = $request->file('licence')){
+                $name = time().$file->getClientOriginalName();
+                $file->move('images',$name);
+                $input['licence'] = $name; 
+            }
+
+            if($file = $request->file('NIC_back')){
+                $name = time().$file->getClientOriginalName();
+                $file->move('images',$name);
+                $input['NIC_back'] = $name; 
+            }
+
+            if($file = $request->file('NIC_front')){
+                $name = time().$file->getClientOriginalName();
+                $file->move('images',$name);
+                $input['NIC_front'] = $name; 
+            }
+
+             if($file = $request->file('truck_photo_no_plate')){
+                $name = time().$file->getClientOriginalName();
+                $file->move('images',$name);
+                $input['truck_photo_no_plate'] = $name; 
+            }
+
+             
+             
+
+            if($found){
+
+                $found->update($input); 
+                 
+            } else{
+                DriverInfo::create($input);
+                
+            }
+
+              return response()->json(['success' => 'User Profile update successfully !'], 200);
+
+    //             $subjectResults = DB::select(DB::raw("select users.*,driver_info.* from  users  
+    // Left JOIN driver_info   ON driver_info.user_id = users.id
+    // where  users.id =$user"));
+                   
+    //             return response()->json(['success' => 'Not active!','data'=>$subjectResults], 200);
+ 
+            // user doesn't exist
+        }else{
+
+            return response()->json(['error' => 'user Not Exist '], 200);
+             
+           
+        }
+    
+    }
+
+
+
+    /*
+    /  Update Password 
+    */
+
+    public function update_password(request $request)
+    {
+        $user_id= $request->get('user_id');
+        $password = Hash::make($request->get('cpassword'));
+
+        if($request->get('password') == $request->get('cpassword')){
+             
+             User::where('id', $user_id)
+       ->update([
+           'password' => $password
+        ]);
+       return response()->json(['success' => 'Password updated successfully!'], 200);
+           
+             
+
+
+        }else{
+             return response()->json(['success' => 'Password and conform password are not same!'], 200);
+           
+        }
+
+    
+    }
+
+
+    /*
+    /  Online Status User 
+    */
+
+    public function online(request $request)
+    {
+        $user_id= $request->get('user_id');
+        $longitude= $request->get('longitude');
+        $latitude= $request->get('latitude');
+        
+        $matchThese = array('id' =>$request->get('user_id'));
+        $found = User::where($matchThese)->first();
+         
+       if ($found) {
+
+             User::where('id', $user_id)
+       ->update([
+           'latitude' => $latitude,
+           'longitude' => $longitude,
+           'online' => 1
+        ]);
+             return response()->json(['success' => 'User status online!'], 200);
+
+       }else{
+             return response()->json(['success' => 'User Not exists!'], 200);
+       }   
+    }
+
+    /*
+    /  Offline  Status User 
+    */
+
+    public function offline(request $request)
+    {
+        $user_id= $request->get('user_id');
+        $longitude= $request->get('longitude');
+        $latitude= $request->get('latitude');
+        
+        $matchThese = array('id' =>$request->get('user_id'));
+        $found = User::where($matchThese)->first();
+         
+       if ($found) {
+
+             User::where('id', $user_id)
+       ->update([
+           'latitude' => $latitude,
+           'longitude' => $longitude,
+           'online' => 0
+        ]);
+             return response()->json(['success' => 'User status Offline!'], 200);
+
+       }else{
+             return response()->json(['success' => 'User Not exists!'], 200);
+       }   
+    }
+
+    /*
+    /  Update  Location User 
+    */
+
+    public function update_location(request $request)
+    {
+        $user_id= $request->get('user_id');
+        $longitude= $request->get('longitude');
+        $latitude= $request->get('latitude');
+        
+        $matchThese = array('id' =>$request->get('user_id'));
+        $found = User::where($matchThese)->first();
+         
+       if ($found) {
+
+             User::where('id', $user_id)
+       ->update([
+           'latitude' => $latitude,
+           'longitude' => $longitude
+        ]);
+             return response()->json(['success' => 'User location update !'], 200);
+
+       }else{
+             return response()->json(['success' => 'User Not exists!'], 200);
+       }   
+    }
+
+
+
 }

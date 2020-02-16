@@ -63,10 +63,20 @@ class AuthController extends Controller
     public function mobile_login(Request $request)
     {
         $credentials = $request->only('phone_no', 'password');
+       
         
         if ($token = $this->guard()->attempt($credentials)) {
-            return response()->json(new UserResource(Auth::user()), Response::HTTP_OK)->header('Authorization', $token);
+             $record = new UserResource(Auth::user());
+        
+          //  print_r($record);
+
+            return response()->json(['success' => 'User Login success!', 'data'=>$record,'token'=>$token], 200);
+        //return response()->json(new UserResource(Auth::user()), Response::HTTP_OK)->header('Authorization', $token);
         } 
-        return response()->json(new JsonResponse([], 'login_error'), Response::HTTP_UNAUTHORIZED);
+        
+
+         return response()->json(new JsonResponse([], 'login_error'), 401);
+
+       //  return response()->json(new JsonResponse([], 'login_error'), Response::HTTP_UNAUTHORIZED);
     }
 }

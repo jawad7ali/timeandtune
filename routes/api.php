@@ -37,7 +37,41 @@ use Illuminate\Support\Facades\Hash;
     
     Route::post('mobile/load', 'LoadsController@index');
 
-     Route::post('assign/order', 'LoadsController@assign_order');
+    Route::post('assign/order', 'LoadsController@assign_order');
+
+    Route::post('user/forgot', 'UserController@reset_password');
+
+    Route::post('user/forgot/update', 'UserController@update_password');
+
+    Route::post('user/profile', 'UserController@profile');
+
+    Route::post('user/profile/update', 'UserController@profile_update');    
+
+    Route::post('user/online', 'UserController@online');
+
+    Route::post('user/offline', 'UserController@offline');
+
+    Route::post('user/location/update', 'UserController@update_location');
+
+    Route::post('order/pending', 'LoadsController@pending_order');
+
+    Route::post('order/edit', 'LoadsController@edit_order');
+
+    Route::post('order/cancel', 'LoadsController@cancel_order');
+
+    Route::post('order/active', 'LoadsController@active_order');
+
+    Route::post('order/accept', 'LoadsController@accept_order');
+
+    Route::post('order/reject', 'LoadsController@reject_order');
+
+    Route::post('order/transit', 'LoadsController@transit_order');
+
+    Route::post('order/start', 'LoadsController@start_order');
+
+    Route::post('order/complete', 'LoadsController@complete_order');
+
+	Route::post('order/history', 'LoadsController@history_order');     
    
     //mobile API'S
     
