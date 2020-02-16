@@ -100,13 +100,12 @@ export const constantRoutes = [
     children: [
       {
         path: 'index',
-		component: () => import('@/views/carrier_list/List'),
+        component: () => import('@/views/carrier_list/List'),
         name: 'UserList',
         meta: { title: 'Carrier', icon: 'user', noCache: true },
       },
     ],
-  }
-  ,
+  },
   // {
   //   path: '/guide',
   //   component: Layout,

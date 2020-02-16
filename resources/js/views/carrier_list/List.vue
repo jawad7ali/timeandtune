@@ -2,14 +2,14 @@
   <div class="app-container">
     <div class="filter-container">
       <el-input v-model="query.keyword" :placeholder="$t('table.keyword')" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-       
+
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         {{ $t('table.search') }}
       </el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" @click="handleCreate">
         {{ $t('table.add') }}
       </el-button>
-       
+
     </div>
 
     <el-table v-loading="loading" :data="list" border fit highlight-current-row style="width: 100%">
@@ -25,8 +25,6 @@
         </template>
       </el-table-column>
 
-      
-      
       <el-table-column align="center" label="Phone">
         <template slot-scope="scope">
           <span>{{ scope.row.phone_no }}</span>
@@ -37,8 +35,8 @@
           <span>{{ scope.row.created_at }}</span>
         </template>
       </el-table-column>
-      
-    <el-table-column align="center" label="Carrier Type">
+
+      <el-table-column align="center" label="Carrier Type">
         <template slot-scope="scope">
 
           <span v-if="scope.row.role_id === 1">
@@ -50,36 +48,27 @@
           <span v-else-if="scope.row.role_id === 3">
             Frieght Forwarder
           </span>
-          
-          
+
         </template>
       </el-table-column>
 
-
-      
       <el-table-column align="center" label="Actions" width="350">
         <template slot-scope="scope">
-           
-            
-          
+
           <router-link
-  to="'/administrator/users/edit/'+scope.row.id"
->
-  <el-button v-permission="['manage user']" type="primary" size="small" icon="el-icon-edit">
+            to="'/administrator/users/edit/'+scope.row.id"
+          >
+            <el-button v-permission="['manage user']" type="primary" size="small" icon="el-icon-edit">
               Edit
             </el-button>
-</router-link>
-
-
-             
-             <el-button v-permission="['manage user']" type="primary" size="small" icon="el-icon-edit">
-              Edit
-            </el-button>
-          
           </router-link>
 
+          <el-button v-permission="['manage user']" type="primary" size="small" icon="el-icon-edit">
+            Edit
+          </el-button>
 
-           
+          </router-link>
+
           <el-button type="danger" size="small" icon="el-icon-delete" @click="handleDelete(scope.row.id, scope.row.name);">
             Delete
           </el-button>
@@ -123,7 +112,6 @@
       <div v-loading="userCreating" class="form-container">
         <el-form ref="userForm" :rules="rules" :model="newUser" label-position="left" label-width="150px" style="max-width: 500px;">
 
-          
           <el-form-item :label="$t('user.name')" prop="name">
             <el-input v-model="newUser.name" />
           </el-form-item>
@@ -132,20 +120,18 @@
           </el-form-item>
 
           <el-form-item :label="$t('user.role')" prop="role">
-            
+
             <el-select v-model="newUser.role" class="filter-item" placeholder="Please select role">
               <el-option v-for="item in nonAdminRoles" :key="item" :label="item | uppercaseFirst" :value="item" />
             </el-select>
           </el-form-item>
 
           <el-form-item :label="$t('Role Type')" prop="role">
-            
-           <!--  <el-select v-model="newUser.role" class="filter-item" placeholder="Please select role type">
+
+            <!--  <el-select v-model="newUser.role" class="filter-item" placeholder="Please select role type">
               <el-option v-for="item in nonAdminRoles" :key="item" :label="item | uppercaseFirst" :value="item" />
             </el-select> -->
           </el-form-item>
-
-
 
           <el-form-item :label="$t('user.password')" prop="password">
             <el-input v-model="newUser.password" show-password />
@@ -159,7 +145,7 @@
             {{ $t('table.cancel') }}
           </el-button>
           <el-button type="primary" @click="createUser()">
-          
+
             {{ $t('table.confirm') }}
           </el-button>
         </div>
