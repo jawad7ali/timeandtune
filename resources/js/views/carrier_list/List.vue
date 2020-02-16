@@ -61,14 +61,10 @@
             <el-button v-permission="['manage user']" type="primary" size="small" icon="el-icon-edit">
               Edit
             </el-button>
+            <el-button v-permission="['manage user']" type="primary" size="small" icon="el-icon-edit">
+              Edit
+            </el-button>
           </router-link>
-
-          <el-button v-permission="['manage user']" type="primary" size="small" icon="el-icon-edit">
-            Edit
-          </el-button>
-
-          </router-link>
-
           <el-button type="danger" size="small" icon="el-icon-delete" @click="handleDelete(scope.row.id, scope.row.name);">
             Delete
           </el-button>
