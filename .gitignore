@@ -1,5 +1,6 @@
 /storage/*.key
 /vendor 
+/node_modules
 .env
 .env.backup
 .idea

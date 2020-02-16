@@ -106,6 +106,33 @@ export const constantRoutes = [
       },
     ],
   },
+  {
+    path: '/load',
+    component: Layout,
+    redirect: '/load',
+    alwaysShow: true,
+    meta: { title: 'Load', icon: 'zip', permissions: ['view menu zip'] },
+    children: [
+      {
+        path: 'available',
+        component: () => import('@/views/zip'),
+        name: 'AvalibleLoad',
+        meta: { title: 'Listed Load' },
+      },
+      {
+        path: 'pending',
+        component: () => import('@/views/zip'),
+        name: 'PendingLoad',
+        meta: { title: 'Pending Load' },
+      },
+      {
+        path: 'confirm',
+        component: () => import('@/views/zip'),
+        name: 'ConfirmLoad',
+        meta: { title: 'Confirm Load' },
+      },
+    ],
+  },
   // {
   //   path: '/guide',
   //   component: Layout,
