@@ -32,7 +32,7 @@ use Illuminate\Support\Facades\Hash;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-
+    Route::post('auth/login', 'AuthController@login');
     Route::group(['middleware' => 'api'], function () {
     
     Route::post('mobile/load', 'LoadsController@index');
@@ -80,7 +80,7 @@ use Illuminate\Support\Facades\Hash;
     //mobile Sign Up API'S
     Route::post('signup', 'UserController@signUp');   
     
-    Route::post('auth/login', 'AuthController@login');
+    
     
     Route::group(['middleware' => 'auth:api'], function () {
         Route::get('auth/user', 'AuthController@user');
