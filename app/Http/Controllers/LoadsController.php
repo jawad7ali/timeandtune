@@ -54,7 +54,7 @@ class LoadsController extends Controller
         $found = OrdersLoad::where($matchThese)->first();
       //  dump($found);
        if ($found) {  
-            return response()->json(['error' => 'Already confirm'], 200);
+            return response()->json(['error' => 'Already confirm'], 401);
             // user doesn't exist
         }else{
 
