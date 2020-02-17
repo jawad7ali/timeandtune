@@ -52,7 +52,7 @@ class LoadsController extends Controller
         $matchThese = array('load_id' =>$request->get('load_id'), 'user_id' =>$request->get('user_id'));
          
         $found = OrdersLoad::where($matchThese)->first();
-        dump($found);
+      //  dump($found);
        if ($found) {  
             return response()->json(['error' => 'Already confirm'], 200);
             // user doesn't exist
