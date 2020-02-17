@@ -235,7 +235,7 @@ class LoadsController extends Controller
     public function active_order(request $request)
         {
 
-          $matchThese = array('user_id' =>$request->get('user_id'),'status' =>'active');
+          $matchThese = array('user_id' =>$request->get('user_id'),'status' =>'completed');
           $found = OrdersLoad::where($matchThese)->get();
           $founds= count($found);
          if ($found) { 
