@@ -51,10 +51,8 @@ class LoadsController extends Controller
         
         $matchThese = array('load_id' =>$request->get('load_id'), 'user_id' =>$request->get('user_id'));
          
-
-
         $found = OrdersLoad::where($matchThese)->first();
-         
+        dump($found);
        if ($found) {  
             return response()->json(['error' => 'Already confirm'], 200);
             // user doesn't exist
@@ -89,15 +87,10 @@ class LoadsController extends Controller
     {
          
         
-        $matchThese = array('user_id' =>$request->get('user_id'), 'status' => 'pending');         
-       $userid=  $request->get('user_id');
+      $matchThese = array('user_id' =>$request->get('user_id'), 'status' => 'pending');         
+      $userid=  $request->get('user_id');
       $found = OrdersLoad::where($matchThese)->get();
-
-        $founds= count($found);
-
-         
-
-        
+      $founds= count($found);
        if ($founds==0) {  
             
             return response()->json(['error' => 'No pending order'], 200);
@@ -223,7 +216,7 @@ class LoadsController extends Controller
            $matchThese = array('id' =>$request->get('id'), 'user_id' =>$request->get('user_id'));
             $found = OrdersLoad::where($matchThese)->first();
        if ($found) {  
-            OrdersLoad::where('id', $request->get('id'))
+            OrdersLoad::where('id', $request->get('id'), 'user_id' =>$request->get('user_id'))
             ->update([
                    'status' => 'cancel'
             ]);
