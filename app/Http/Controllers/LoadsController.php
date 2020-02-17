@@ -215,8 +215,9 @@ class LoadsController extends Controller
         {
            $matchThese = array('id' =>$request->get('id'), 'user_id' =>$request->get('user_id'));
             $found = OrdersLoad::where($matchThese)->first();
-       if ($found) {  
-            OrdersLoad::where('id', $request->get('id'), 'user_id' =>$request->get('user_id'))
+       if ($found) {
+          $matchcan = array('id' =>$request->get('id'), 'user_id' =>$request->get('user_id'));
+            OrdersLoad::where($matchcan)
             ->update([
                    'status' => 'cancel'
             ]);
