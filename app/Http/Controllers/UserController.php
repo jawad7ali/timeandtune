@@ -356,9 +356,8 @@ class UserController extends Controller
             
             // user doesn't exist
         }else{
-
-            return response()->json(['error' => 'Number not exists'], 200);
-             
+            
+            return response()->json(['error'=>'Number not exists'], 401);       
            
         }
     
@@ -484,7 +483,8 @@ class UserController extends Controller
             // user doesn't exist
         }else{
 
-            return response()->json(['error' => 'user Not Exist '], 200);
+            return response()->json(['error'=>'User Not Exist'], 401);   
+           // return response()->json(['error' => 'user Not Exist '], 200);
              
            
         }
