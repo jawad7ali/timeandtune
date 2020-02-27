@@ -79,11 +79,8 @@ use Illuminate\Support\Facades\Hash;
     
     //mobile Sign Up API'S
     Route::post('signup', 'UserController@signUp');   
-    
-    
-    
+    Route::get('auth/user', 'AuthController@user');
     Route::group(['middleware' => 'auth:api'], function () {
-        Route::get('auth/user', 'AuthController@user');
         Route::post('auth/logout', 'AuthController@logout');
     });
 
