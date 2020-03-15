@@ -87,7 +87,7 @@ use Illuminate\Support\Facades\Hash;
     });
 
 
-    Route::apiResource('users', 'UserController')->middleware('permission:' . \App\Laravue\Acl::PERMISSION_USER_MANAGE);
+    Route::apiResource('users', 'UserController');
     
     Route::get('users/{user}/permissions', 'UserController@permissions')->middleware('permission:' . \App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
     
