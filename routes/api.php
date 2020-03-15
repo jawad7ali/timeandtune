@@ -97,7 +97,7 @@ use Illuminate\Support\Facades\Hash;
     
     Route::get('roles/{role}/permissions', 'RoleController@permissions')->middleware('permission:' . \App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
     
-    Route::apiResource('permissions', 'PermissionController')->middleware('permission:' . \App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('permissions', 'PermissionController');
 
     // Fake APIs
 
