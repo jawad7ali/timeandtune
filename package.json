@@ -52,7 +52,7 @@
     "webpack-bundle-analyzer": "^3.5.0"
   },
   "dependencies": {
-    "axios": "^0.19",
+    "axios": "^0.21",
     "browser-sync": "^2.26.7",
     "browser-sync-webpack-plugin": "^2.2.2",
     "camelcase": "^5.3.1",
